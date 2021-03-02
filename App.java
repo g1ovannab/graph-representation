@@ -44,24 +44,33 @@ public class App {
         files_list.add(file4);
 
 
-        String linha = " ";
-        String sep = "\n";
-        String [] pedacos;
+        String line = " ";
         
-        // linha = br.readLine();
+        ArrayList<Graph> graphs_list = new ArrayList<>();
 
-        for (4 arquivos){
-            while (file nao acabou){
-                continua lendo
-            }
+        for (Files file : files_list){
+            line = file.getBR().readLine();
+            int vertices = Integer.parseInt(line);
 
-            fecha reader e buffer do arquivo
+            line = file.getBR().readLine();
+            int edges = Integer.parseInt(line);
+
+            line = file.getBR().readLine();
+            byte directed = Byte.parseByte(line);
+
+            line = file.getBR().readLine();
+            byte weighted = Byte.parseByte(line);
+
+            Graph graph = new Graph(vertices, edges, directed, weighted);
+            graphs_list.add(graph);
+
+            //aqui tenho que gravar vértices e arestas
+            
+            // while (file nao acabou){
+            //     continua lendo
+            // }
+            // fecha reader e buffer do arquivo
         }
-        
-
-
-
-
 
 
         scan.close();

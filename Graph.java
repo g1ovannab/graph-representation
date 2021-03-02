@@ -23,21 +23,23 @@ public class Graph {
     }
 
     public Boolean isDirected() { return directed; }
-    public void setIsDirected(byte d) { 
+    public Boolean setIsDirected(byte d) { 
         if(d == 0){
-            this.directed = false;
+            return this.directed = false;
         } else if(d == 1){
-            this.directed = true;
+            return this.directed = true;
         }
+        return null;
     }
 
     public Boolean isWeighted() { return weighted; }
-    public void setIsWeighted(byte w) { 
+    public Boolean setIsWeighted(byte w) { 
         if(w == 0){
-            this.weighted = false;
+            return this.weighted = false;
         } else if(w == 1){
-            this.weighted = true;
+            return this.weighted = true;
         }
+        return null;
     }
 
     public Graph(){
@@ -47,10 +49,10 @@ public class Graph {
         this.weighted = null;
     }
 
-    public Graph(int v, int e, Boolean d, Boolean w){
+    public Graph(int v, int e, byte d, byte w){
         this.vertices = v;
         this.edges = e;
-        this.directed = d;
-        this.weighted = w;
+        this.directed = setIsDirected(d);
+        this.weighted = setIsWeighted(w);
     }
 }
