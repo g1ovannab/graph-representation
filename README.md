@@ -7,10 +7,17 @@ We need to find the best implementation for each graph (matrix or list) and just
 
 ## How the files will be organized
 ```txt
+<<<<<<< HEAD
 1	0/1				//directed	- 0 no; 1 yes
 2	0/1				//weighted 	- 0 no; 1 yes
 3	90 				//number of vertices
 4	120				//number of edges
+=======
+1	0/1				      //directed	- 0 no; 1 yes
+2	0/1				      //weighted 	- 0 no; 1 yes
+3	90 				      //number of vertices
+4	120				      //number of edges
+>>>>>>> 5037c818ef0d0142272362c5a809f059559c46a2
 5	1 2 3 (...)     //vertices
 6	1 2
 7	2 3 290         //ATENTION! If there's more than 2 numbers in the edge line, it means that 
@@ -18,7 +25,7 @@ We need to find the best implementation for each graph (matrix or list) and just
 8	3 4
 9	5 6             //edges
 10	6 7
-11	FLAG			//flag
+11	FLAG			    //flag
 12
 .
 .
@@ -33,8 +40,11 @@ We need to find the best implementation for each graph (matrix or list) and just
 - [ ] Do matrix or list
 - [ ] Do doc of code
 - [ ] Comment code
+<<<<<<< HEAD
 
 
 
 
+=======
+>>>>>>> 5037c818ef0d0142272362c5a809f059559c46a2
 
