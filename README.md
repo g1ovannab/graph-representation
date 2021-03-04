@@ -12,14 +12,13 @@ We need to find the best implementation for each graph (matrix or list) and just
 3	90 				//number of vertices
 4	120				//number of edges
 5	1 2 3 (...)     //vertices
-6	1 2
+6	1 2             //edges
 7	2 3 290         //ATENTION! If there's more than 2 numbers in the edge line, it means that 
                     the third number is the wieghted one
 8	3 4
 9	5 6             //edges
 10	6 7
-11	FLAG			    //flag
-12
+11
 .
 .
 .
@@ -29,7 +28,4 @@ We need to find the best implementation for each graph (matrix or list) and just
 ## To do
 - [x] Graph Class
 - [x] Read file
-- [ ] Do file with graphs
-- [ ] Do matrix or list
-- [ ] Do doc of code
-- [ ] Comment code
+- [x] Comment code
