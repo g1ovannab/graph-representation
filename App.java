@@ -82,31 +82,40 @@ public class App {
             /* Here, we create the representation to the graphs, depending on if it's directed and weighted, or not; */
             if (directed == 0 && weighted == 0){
                 /* The 'matrix' variable stores the value returned from the method call; */
-                int[][] matrix = adjacencyMatrix(graph, file, line);
+                int[][] matrix1 = new int[vertices][vertices];
+                adjacencyMatrix(matrix1, graph, file, line);
 
                 k = 1;
                 /* Calls the method that prints the graph; */
-                printGraphs(scan, graph, matrix, k);
+                printGraphs(scan, graph, matrix1, null, k);
 
             } else if (directed == 0 && weighted == 1){
                 /* The 'matrix' variable stores the value returned from the method call; */
-                int[][] matrix = adjacencyMatrix(graph, file, line);
+                int[][] matrix2 = new int[vertices][vertices];
+                adjacencyMatrix(matrix2, graph, file, line);
 
                 k = 2;
                 /* Calls the method that prints the graph; */
-                printGraphs(scan, graph, matrix, k);                
+                printGraphs(scan, graph, matrix2, null, k);                
 
             } else if (directed == 1 && weighted == 0){
-                //lista de incidência
-                //System.out.println("Lista de Incidência ainda não implementada.");
+                //lista de adjacência
+                //System.out.println("Lista de Adjacência ainda não implementada.");
+
+                ArrayList<ArrayList<Integer>> list = new ArrayList<>();
+                adjacencyList(list, graph, file, line);
+
+                k = 3;
+                printGraphs(scan, graph, null, list, k);
 
             } else if (directed == 1 && weighted == 1){
                 /* The 'matrix' variable stores the value returned from the method call; */
-                int[][] matrix = adjacencyMatrix(graph, file, line);
+                int[][] matrix3 = new int[vertices][vertices];
+                adjacencyMatrix(matrix3, graph, file, line);
                 
                 k = 4;
                 /* Calls the method that prints the graph; */
-                printGraphs(scan, graph, matrix, k);                    
+                printGraphs(scan, graph, matrix3, null, k);                    
             }
 
         }
@@ -114,7 +123,8 @@ public class App {
         scan.close();
     }
 
-    public static void printGraphs(Scanner scan, Graph graph, int[][] matrix, byte k){
+    //COMMENT
+    public static void printGraphs(Scanner scan, Graph graph, int[][] matrix, ArrayList<ArrayList<Integer>> list, byte k){
         String answer = "";
         System.out.println("Do you want to print the representation of graph "+ k +"? Type y or n.");
         answer = scan.nextLine().toLowerCase();
@@ -122,7 +132,7 @@ public class App {
         if (answer.equals("yes") || answer.equals("y")){
 
             if (k == 1){
-                System.out.print("GRAPH 1 - Not directed and not weighted.\n");
+                System.out.println("GRAPH 1 - Not directed and not weighted.\n");
                 for (int i = 0; i < graph.getVertices(); i++){
                     for (int j = 0; j < graph.getVertices(); j++){
                         System.out.print(matrix[i][j] + "  ");
@@ -132,7 +142,7 @@ public class App {
             }
             
             if (k == 2){
-                System.out.print("GRAPH 2 - Not directed and weighted.\n");
+                System.out.println("GRAPH 2 - Not directed and weighted.\n");
                 for (int i = 0; i < graph.getVertices(); i++){
                     for (int j = 0; j < graph.getVertices(); j++){
                         if (matrix[i][j] >= 0 && matrix[i][j] < 10){
@@ -146,7 +156,11 @@ public class App {
             }
 
             if (k == 3){
-                System.out.print("GRAPH 3 - Directed and not weighted.\n");
+                System.out.println("GRAPH 3 - Directed and not weighted.\n");
+                System.out.println("\nThis list is implemented using successors.");
+                for (int i = 0; i < list.size(); i++){
+                    System.out.println((i + 1) + " -> " + list.get(i));
+                }
             }
 
             if (k == 4){
@@ -164,11 +178,14 @@ public class App {
             }
 
         } else{
-            System.out.println("Okay, thanks for visiting. Check out the code!");
+            if (k == 4)
+                System.out.println("Okay, thanks for visiting. Check out the code!");
+            else 
+                System.out.println("Okay!");
         }
     }
 
-    public static int[][] adjacencyMatrix(Graph graph, Files file, String lineRead) throws IOException {
+    public static void adjacencyMatrix(int[][] adjMatrix, Graph graph, Files file, String lineRead) throws IOException {
 
         /* Variables that will monitor the filling in the matrices; */
         boolean directed = graph.isDirected();
@@ -176,9 +193,6 @@ public class App {
 
         /* Variable that will determinate the number of rows and columns of the matrix; */
         int vertices = graph.getVertices();
-
-        // Matrix;
-        int[][] adjMatrix = new int[vertices][vertices];
 
         if (weighted == true){ /* If the graph is weighted, we'll fill the matrix with -1,
         so, if there's some weighted value equal 0, we'll know how to distinguish; */
@@ -238,12 +252,44 @@ public class App {
             /* We need to read the next line, so it can go back to the while validation;  */
             lineRead = file.getBR().readLine();
         }
-
-        // Return the matrix;
-        return adjMatrix;
     }
 
+    //COMMENT
+    public static void adjacencyList(ArrayList<ArrayList<Integer>> edgesSet, Graph graph, Files file, String lineRead) throws IOException {
 
+        int vertices = graph.getVertices();
+
+        //ArrayList<ArrayList<Integer>> edgesSet = new ArrayList<>();
+        edgesSet = new ArrayList<>();
+
+        ArrayList<Integer> destiny = new ArrayList<>();
+
+        for (int i = 0; i < vertices; i++){
+            destiny = new ArrayList<>();
+            edgesSet.add(i, destiny);
+        }
+
+        /* Start reading the edges set; */
+        lineRead = file.getBR().readLine();
+        
+        while(lineRead != null){ /* If this line isn't null, it means that has a edge value; */
+            String regexEdges = " ";
+
+            /* We'll slice this line in a array of Strings; */
+            String[] slicedEdges = lineRead.split(regexEdges);
+
+            int s = Integer.parseInt(slicedEdges[0]); //source
+            int d = Integer.parseInt(slicedEdges[1]); //destiny
+
+            destiny = edgesSet.get(s - 1);
+            destiny.add(d);
+            edgesSet.set(s - 1, destiny);
+
+
+            /* We need to read the next line, so it can go back to the while validation;  */
+            lineRead = file.getBR().readLine();
+        }
+    }
     
 
 }
